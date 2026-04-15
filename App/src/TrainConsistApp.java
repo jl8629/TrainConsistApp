@@ -1,17 +1,40 @@
-import java.util.LinkedHashSet;
+import java.util.*;
+
+class InvalidCapacityException extends Exception {
+    InvalidCapacityException(String message) {
+        super(message);
+    }
+}
+
+class Bogie {
+    int id;
+    int capacity;
+
+    Bogie(int id, int capacity) throws InvalidCapacityException {
+        if (capacity <= 0) {
+            throw new InvalidCapacityException("Capacity must be greater than 0");
+        }
+        this.id = id;
+        this.capacity = capacity;
+    }
+
+    public String toString() {
+        return "Bogie ID: " + id + ", Capacity: " + capacity;
+    }
+}
 
 public class TrainConsistApp {
     public static void main(String[] args) {
-        System.out.println("=== Train Consist Management App ===");
+        List<Bogie> bogies = new ArrayList<>();
 
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        try {
+            bogies.add(new Bogie(1, 50));
+            bogies.add(new Bogie(2, -10));
+            bogies.add(new Bogie(3, 70));
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
-        trainFormation.add("Sleeper");
-
-        System.out.println("Final train formation: " + trainFormation);
+        bogies.forEach(System.out::println);
     }
 }
