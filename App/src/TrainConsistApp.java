@@ -1,17 +1,32 @@
-import java.util.LinkedHashSet;
+import java.util.*;
+import java.util.regex.*;
 
 public class TrainConsistApp {
     public static void main(String[] args) {
-        System.out.println("=== Train Consist Management App ===");
+        Scanner sc = new Scanner(System.in);
 
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        System.out.print("Enter Train ID: ");
+        String trainId = sc.nextLine();
 
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
-        trainFormation.add("Sleeper");
+        System.out.print("Enter Cargo Code: ");
+        String cargoCode = sc.nextLine();
 
-        System.out.println("Final train formation: " + trainFormation);
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+
+        Matcher trainMatcher = trainPattern.matcher(trainId);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+
+        if (trainMatcher.matches()) {
+            System.out.println("Valid Train ID");
+        } else {
+            System.out.println("Invalid Train ID");
+        }
+
+        if (cargoMatcher.matches()) {
+            System.out.println("Valid Cargo Code");
+        } else {
+            System.out.println("Invalid Cargo Code");
+        }
     }
 }
