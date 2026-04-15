@@ -1,17 +1,33 @@
-import java.util.LinkedHashSet;
+import java.util.*;
+
+class Bogie {
+    int id;
+    String type;
+    String cargo;
+
+    Bogie(int id, String type, String cargo) {
+        this.id = id;
+        this.type = type;
+        this.cargo = cargo;
+    }
+}
 
 public class TrainConsistApp {
     public static void main(String[] args) {
-        System.out.println("=== Train Consist Management App ===");
+        List<Bogie> bogies = Arrays.asList(
+            new Bogie(1, "Cylindrical", "Petroleum"),
+            new Bogie(2, "Box", "Coal"),
+            new Bogie(3, "Cylindrical", "Petroleum"),
+            new Bogie(4, "Flat", "Steel")
+        );
 
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        boolean isSafe = bogies.stream()
+                .allMatch(b -> !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
 
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
-        trainFormation.add("Sleeper");
-
-        System.out.println("Final train formation: " + trainFormation);
+        if (isSafe) {
+            System.out.println("Train is safety compliant");
+        } else {
+            System.out.println("Train is NOT safety compliant");
+        }
     }
 }
